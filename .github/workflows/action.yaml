@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: check out code
         uses: actions/checkout@v2
-      - name: set up oython
+      - name: set up python
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
@@ -18,11 +18,11 @@ jobs:
         run: |
             cd function
             python -m pip install --upgrade pip
-            of[ -f requirements.txt ]; the pip install-r requirements.txt .; fi
-      - name: create sip bundle
+            if [ -f requirements.txt ]; then pip install -r requirements.txt .; fi
+      - name: create zip bundle
         run: |
             cd functions
-            zip -r ../${{github.sha}}.zip .
+            zip -r ../${{ github.sha }}.zip .
       - name: Archive artifact
         uses: actions/upload-artifact@v2
         with:
