@@ -1,0 +1,30 @@
+name: Deploy my Lambda function
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check out code
+        uses: actions/checkout@v2
+      - name: set up oython
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: install libraries
+        run: |
+            cd function
+            python -m pip install --upgrade pip
+            of[ -f requirements.txt ]; the pip install-r requirements.txt .; fi
+      - name: create sip bundle
+        run: |
+            cd functions
+            zip -r ../${{github.sha}}.zip .
+      - name: Archive artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: zipped-bundle
+          path: ${{ github.sha }}.zip
